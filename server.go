@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 	"github.com/savsgio/atreugo"
 	"go-web-framework-benchmark/pow"
 	"gopkg.in/baa.v1"
@@ -63,6 +65,8 @@ func main() {
 		startAtreugo()
 	case "baa":
 		startBaa()
+	case "beego":
+		startBeego()
 	}
 }
 
@@ -80,7 +84,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(message)
 }
 func startDefaultMux() {
-	http.HandleFunc("/", helloHandler)
+	http.HandleFunc("/hello", helloHandler)
 	http.ListenAndServe(":"+strconv.Itoa(port), nil)
 }
 
@@ -121,4 +125,26 @@ func startBaa() {
 	mux := baa.New()
 	mux.Get("/hello", baaHandler)
 	mux.Run(":" + strconv.Itoa(port))
+}
+
+// beego
+func beegoHandler(ctx *context.Context) {
+	if cpuBound {
+		pow.Pow(target)
+	} else {
+		if sleepTime > 0 {
+			time.Sleep(sleepTimeDuration)
+		} else {
+			runtime.Gosched()
+		}
+	}
+	ctx.WriteString(messageStr)
+
+}
+func startBeego() {
+	beego.BConfig.RunMode = beego.PROD
+	beego.BeeLogger.Close()
+	mux := beego.NewControllerRegister()
+	mux.Get("/hello", beegoHandler)
+	http.ListenAndServe(":"+strconv.Itoa(port), mux)
 }
