@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
+	"github.com/go-zoo/bone"
 	"github.com/savsgio/atreugo"
 	"go-web-framework-benchmark/pow"
 	"gopkg.in/baa.v1"
@@ -67,6 +68,8 @@ func main() {
 		startBaa()
 	case "beego":
 		startBeego()
+	case "bone":
+		startBone()
 	}
 }
 
@@ -146,5 +149,12 @@ func startBeego() {
 	beego.BeeLogger.Close()
 	mux := beego.NewControllerRegister()
 	mux.Get("/hello", beegoHandler)
+	http.ListenAndServe(":"+strconv.Itoa(port), mux)
+}
+
+// bone
+func startBone() {
+	mux := bone.New()
+	mux.HandleFunc("/hello", helloHandler)
 	http.ListenAndServe(":"+strconv.Itoa(port), mux)
 }
