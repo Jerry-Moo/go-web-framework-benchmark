@@ -9,7 +9,7 @@ _test
 
 *.exe
 go-web-framework-benchmark
-gowebframeworkbenchmark
+gowebbenchmark
 
 # ide
 .vscode
