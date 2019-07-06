@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/savsgio/atreugo"
 	"go-web-framework-benchmark/pow"
+	"gopkg.in/baa.v1"
 	"net/http"
 	"runtime"
 	"strconv"
@@ -60,6 +61,8 @@ func main() {
 		startDefaultMux()
 	case "atreugo":
 		startAtreugo()
+	case "baa":
+		startBaa()
 	}
 }
 
@@ -99,4 +102,23 @@ func startAtreugo() {
 	mux := atreugo.New(&atreugo.Config{Host: "127.0.0.1", Port: port})
 	mux.Path("GET", "/hello", atreugoHandler)
 	mux.ListenAndServe()
+}
+
+// baa
+func baaHandler(ctx *baa.Context) {
+	if cpuBound {
+		pow.Pow(target)
+	} else {
+		if sleepTime > 0 {
+			time.Sleep(sleepTimeDuration)
+		} else {
+			runtime.Gosched()
+		}
+	}
+	ctx.Text(http.StatusOK, message)
+}
+func startBaa() {
+	mux := baa.New()
+	mux.Get("/hello", baaHandler)
+	mux.Run(":" + strconv.Itoa(port))
 }

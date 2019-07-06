@@ -1,5 +1,7 @@
 github.com/fasthttp/router v0.3.4 h1:/ZlR7DKG1UOAgwY5ChxLIr+QFzoJylXb2Kc0qoU7cgM=
 github.com/fasthttp/router v0.3.4/go.mod h1:Dox9pMCKygoMajltoDohsnHlP0iYFDDosirAN8TNr8U=
+github.com/gorilla/websocket v1.4.0 h1:WDFjx/TMzVgy9VdMMQi2K2Emtwi2QcUQsztZ/zLaH/Q=
+github.com/gorilla/websocket v1.4.0/go.mod h1:E7qHFY5m1UJ88s3WnNqhKjPHQ0heANvMoAMk2YaljkQ=
 github.com/klauspost/compress v1.4.0 h1:8nsMz3tWa9SWWPL60G1V6CUsf4lLjWLTNEtibhe8gh8=
 github.com/klauspost/compress v1.4.0/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/klauspost/cpuid v0.0.0-20180405133222-e7e905edc00e h1:+lIPJOWl+jSiJOc70QXJ07+2eg2Jy2EC7Mi11BWujeM=
@@ -17,3 +19,5 @@ github.com/valyala/fasthttp v1.3.0/go.mod h1:4vX61m6KN+xDduDNwXrhIAVZaZaZiQ1luJk
 github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a h1:0R4NLDRDZX6JcmhJgXi5E4b8Wg84ihbmUKp/GvSPEzc=
 github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a/go.mod h1:v3UYOV9WzVtRmSR+PDvWpU/qWl4Wa5LApYYX4ZtKbio=
 golang.org/x/net v0.0.0-20180911220305-26e67e76b6c3/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
+gopkg.in/baa.v1 v1.2.32 h1:Ogunc5RjgAkrmd9SYlUh5RxnbuPg4VuXLi0U7ta2W38=
+gopkg.in/baa.v1 v1.2.32/go.mod h1:aumtvV4jl+vwW6KUQ0i+dGEfr6j4w0VfN8D48OrZ8eE=
