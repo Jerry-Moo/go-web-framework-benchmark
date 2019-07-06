@@ -1,19 +1,19 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	// "io"
+	"github.com/savsgio/atreugo"
 	"go-web-framework-benchmark/pow"
 	"net/http"
-	"os"
 	"runtime"
 	"strconv"
 	"time"
 )
 
 var (
-	port                  = 8080
-	sleepTime             = 0
+	port                  int
+	sleepTime             int
 	cpuBound              bool
 	target                = 15
 	sleepTimeDuration     time.Duration
@@ -21,36 +21,17 @@ var (
 	message               = []byte("hello world")
 	messageStr            = "hello world"
 	// seconds
-	samplingPoint = 20
+	samplingPoint int
 	// run web framework
-	webFramework = "default"
+	webFramework string
 )
 
 func init() {
-	args := os.Args
-	argsLen := len(args)
-	// args[1] web-framework
-	if argsLen > 1 {
-		webFramework = args[1]
-	}
-	// args[2] Processing Time
-	if argsLen > 2 {
-		sleepTime, _ = strconv.Atoi(args[2])
-		if sleepTime == -1 {
-			cpuBound = true
-			sleepTime = 0
-		}
-	}
-
-	if argsLen > 3 {
-		port, _ = strconv.Atoi(args[3])
-	}
-
-	if argsLen > 4 {
-		samplingPoint, _ = strconv.Atoi(args[4])
-	}
-	sleepTimeDuration = time.Duration(sleepTime) * time.Millisecond
-	samplingPointDuration = time.Duration(samplingPoint) * time.Second
+	// web-framework
+	flag.StringVar(&webFramework, "wf", "default", "set test `web-framework`")
+	flag.IntVar(&sleepTime, "s", 0, "set `sleep time`")
+	flag.IntVar(&port, "p", 8080, "set `web` port")
+	flag.IntVar(&samplingPoint, "sp", 20, "set `sampling point`")
 
 	go func() {
 		time.Sleep(samplingPointDuration)
@@ -66,9 +47,19 @@ func init() {
 
 // server [default] [10] [8080]
 func main() {
+	flag.Parse()
+	if sleepTime == -1 {
+		cpuBound = true
+		sleepTime = 0
+	}
+	sleepTimeDuration = time.Duration(sleepTime) * time.Millisecond
+	samplingPointDuration = time.Duration(samplingPoint) * time.Second
+
 	switch webFramework {
 	case "default":
 		startDefaultMux()
+	case "atreugo":
+		startAtreugo()
 	}
 }
 
@@ -88,4 +79,24 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 func startDefaultMux() {
 	http.HandleFunc("/", helloHandler)
 	http.ListenAndServe(":"+strconv.Itoa(port), nil)
+}
+
+// atreugo
+func atreugoHandler(ctx *atreugo.RequestCtx) error {
+	if cpuBound {
+		pow.Pow(target)
+	} else {
+		if sleepTime > 0 {
+			time.Sleep(sleepTimeDuration)
+		} else {
+			runtime.Gosched()
+		}
+	}
+	return ctx.TextResponseBytes(message)
+}
+
+func startAtreugo() {
+	mux := atreugo.New(&atreugo.Config{Host: "127.0.0.1", Port: port})
+	mux.Path("GET", "/hello", atreugoHandler)
+	mux.ListenAndServe()
 }

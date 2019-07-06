@@ -1,3 +1,3 @@
 #!/bin/bash
 
-web_frameworks=("default")
+web_frameworks=("default" "atreugo")

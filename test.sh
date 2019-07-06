@@ -21,7 +21,7 @@ test_web_framework()
 {
     echo "testing web framework: $2"
     # run server
-    ./$server_bin_name $2 $3 &
+    ./$server_bin_name '-wf' $2 '-s' $3 &
     # time sleep 2
     sleep 2
 
