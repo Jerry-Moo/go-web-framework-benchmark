@@ -29,9 +29,11 @@ var (
 func init() {
 	args := os.Args
 	argsLen := len(args)
+	// args[1] web-framework
 	if argsLen > 1 {
 		webFramework = args[1]
 	}
+	// args[2] Processing Time
 	if argsLen > 2 {
 		sleepTime, _ = strconv.Atoi(args[2])
 		if sleepTime == -1 {
