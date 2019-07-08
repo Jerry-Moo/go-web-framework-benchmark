@@ -55,13 +55,17 @@ pkill -9 $server_bin_name
 # time sleep测试模拟 io读写频繁 非cpu 耗时操作
 # 并发相同情况下 time sleep 增加
 echo ","$(IFS=$','; echo "${web_frameworks[*]}" ) > processtime.csv
-test_all 0 5000
+test_all 0 100
+# test_all 0 5000
 echo "0 ms,"$(IFS=$','; echo "${test_result[*]}" ) >> processtime.csv
-test_all 10 5000
+test_all 10 100
+# test_all 10 5000
 echo "10 ms,"$(IFS=$','; echo "${test_result[*]}" ) >> processtime.csv
-test_all 100 5000
+test_all 100 100
+# test_all 100 5000
 echo "100 ms,"$(IFS=$','; echo "${test_result[*]}" ) >> processtime.csv
-test_all 500 5000
+test_all 500 100
+# test_all 500 5000
 echo "500 ms,"$(IFS=$','; echo "${test_result[*]}" ) >> processtime.csv
 
 
@@ -77,12 +81,15 @@ echo "5000,"$(IFS=$','; echo "${test_result[*]}" ) >> concurrency.csv
 
 # 模拟 cpu 耗时操作
 echo ","$(IFS=$','; echo "${web_frameworks[*]}" ) > cpubound-concurrency.csv
+test_all -1 10
+# test_all -1 100
+echo "10,"$(IFS=$','; echo "${test_result[*]}" ) >> cpubound-concurrency.csv
+test_all -1 50
+# test_all -1 1000
+echo "50,"$(IFS=$','; echo "${test_result[*]}" ) >> cpubound-concurrency.csv
 test_all -1 100
+# test_all -1 5000
 echo "100,"$(IFS=$','; echo "${test_result[*]}" ) >> cpubound-concurrency.csv
-test_all -1 1000
-echo "1000,"$(IFS=$','; echo "${test_result[*]}" ) >> cpubound-concurrency.csv
-test_all -1 5000
-echo "5000,"$(IFS=$','; echo "${test_result[*]}" ) >> cpubound-concurrency.csv
 
 mv -f processtime.csv ./testresults
 mv -f concurrency.csv ./testresults
