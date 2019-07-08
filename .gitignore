@@ -5,7 +5,6 @@
 
 # Floders
 _obj
-_test
 
 *.exe
 go-web-framework-benchmark
