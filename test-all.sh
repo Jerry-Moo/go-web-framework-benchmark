@@ -12,5 +12,5 @@ echo "Finished test-latency.sh" >> test.log
 
 echo "Running test-pipelining.sh" >> test.log
 ./test-pipelining.sh
-./testresults.plot.sh
+./testresults/plot.sh
 echo "Finished test-pipelining.sh" >> test.log

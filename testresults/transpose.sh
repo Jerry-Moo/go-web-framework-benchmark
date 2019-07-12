@@ -2,5 +2,5 @@
 
 for file in `ls *.csv`
 do
-    awk -f test.awk $file > t_$file
+    awk -f tst.awk $file > t_$file
 done
