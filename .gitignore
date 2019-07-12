@@ -16,3 +16,6 @@ gowebbenchmark
 
 # ide
 .vscode
+
+# log
+*.log
