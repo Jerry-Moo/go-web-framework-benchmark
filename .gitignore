@@ -3,8 +3,12 @@
 *.so
 
 
+# Architecture specific extensions/prefixes
+*.out
+
 # Floders
 _obj
+
 
 *.exe
 go-web-framework-benchmark
